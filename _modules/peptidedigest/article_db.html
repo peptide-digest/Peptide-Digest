@@ -1,0 +1,999 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>peptidedigest.article_db &#8212; PeptideDigest  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/peptidedigest/article_db';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pd-logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../_static/pd-logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">ScienceScraper</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../getting_started.html">
+                        Getting Started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../user_guide/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../contributing.html">
+                        How to Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../autoapi/index.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/peptide-digest/PeptideDigest" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../getting_started.html">
+                        Getting Started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../user_guide/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../contributing.html">
+                        How to Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../autoapi/index.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/peptide-digest/PeptideDigest" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">peptidediges...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for peptidedigest.article_db</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions for creating and managing a SQLite database for storing articles and their model responses.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="create_database">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_db.create_database">[docs]</a>
+<span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a SQLite database with the given name.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        The name of the database to create.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        The database is created in the current working directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS article_info (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    title TEXT,</span>
+<span class="s2">                    authors TEXT,</span>
+<span class="s2">                    journal TEXT,</span>
+<span class="s2">                    publisher TEXT,</span>
+<span class="s2">                    date DATE,</span>
+<span class="s2">                    url TEXT,</span>
+<span class="s2">                    doi TEXT UNIQUE,</span>
+<span class="s2">                    keywords TEXT,</span>
+<span class="s2">                    scidir_pmc TEXT</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS model_responses (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT UNIQUE,</span>
+<span class="s2">                    bullet_points TEXT,</span>
+<span class="s2">                    summary TEXT,</span>
+<span class="s2">                    metadata TEXT,</span>
+<span class="s2">                    score REAL,</span>
+<span class="s2">                    score_justification TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS peptides (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT,</span>
+<span class="s2">                    peptide TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS proteins (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT,</span>
+<span class="s2">                    protein TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS domains (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT,</span>
+<span class="s2">                    domain TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS chemistry_topics (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT,</span>
+<span class="s2">                    chemistry TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS biology_topics (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT,</span>
+<span class="s2">                    biology TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS computational_methods (</span>
+<span class="s2">                    id INTEGER PRIMARY KEY,</span>
+<span class="s2">                    doi TEXT,</span>
+<span class="s2">                    computational_method TEXT,</span>
+<span class="s2">                    FOREIGN KEY(doi) REFERENCES article_info(doi)</span>
+<span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="insert_article">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/article_db/index.html#peptidedigest.article_db.insert_article">[docs]</a>
+<span class="k">def</span> <span class="nf">insert_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">article_info</span><span class="p">,</span> <span class="n">model_responses</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insert an article and its model responses into the database.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    database : str</span>
+<span class="sd">        The name of the database to insert the article into.</span>
+<span class="sd">    article_info : dict</span>
+<span class="sd">        A dictionary containing the article information.</span>
+<span class="sd">    model_responses : dict</span>
+<span class="sd">        A dictionary containing the model responses for the article.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        The article and model responses are inserted into the database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+
+    <span class="c1"># check if the database exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="c1"># Insert article information</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO article_info (title, authors, journal, publisher, date, url, doi, keywords, scidir_pmc)</span>
+<span class="sd">                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;keywords&quot;</span><span class="p">]),</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;publisher&quot;</span><span class="p">],</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">],</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;keywords&quot;</span><span class="p">]),</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;scidir/pmc&quot;</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Insert model responses</span>
+    <span class="k">if</span> <span class="n">model_responses</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO model_responses (doi, bullet_points, summary, metadata, score, score_justification) </span>
+<span class="sd">                 VALUES (?, ?, ?, ?, ?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;bullet_points&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;score_justification&quot;</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO peptides (doi, peptide) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO proteins (doi, protein) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO domains (doi, domain) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO biology_topics (doi, biology) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO computational_methods (doi, computational_method) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="get_article">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_db.get_article">[docs]</a>
+<span class="k">def</span> <span class="nf">get_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the article information and model responses for a given DOI.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    database : str</span>
+<span class="sd">        The name of the database to retrieve the article from.</span>
+<span class="sd">    doi : str</span>
+<span class="sd">        The DOI of the article to retrieve.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary containing the article information and model responses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check if the database exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2">.db does not exist.&quot;</span><span class="p">)</span>
+    
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT * FROM article_info WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">article_info</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT * FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">model_responses</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT peptide FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">peptides</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT protein FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">proteins</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT domain FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">domains</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT chemistry FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">chemistry_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT biology FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">biology_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT computational_method FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">computational_methods</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">article</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s2">&quot;journal&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+        <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
+        <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
+        <span class="s2">&quot;scidir/pmc&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span>  
+        <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+        <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+        <span class="s2">&quot;score_justification&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+        <span class="s2">&quot;peptides&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">peptide</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">peptide</span> <span class="ow">in</span> <span class="n">peptides</span><span class="p">],</span>
+        <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">protein</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">],</span>
+        <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">domain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">domains</span><span class="p">],</span>
+        <span class="s2">&quot;chemistry_topics&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">chemistry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">chemistry</span> <span class="ow">in</span> <span class="n">chemistry_topics</span><span class="p">],</span>
+        <span class="s2">&quot;biology_topics&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">biology</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">biology</span> <span class="ow">in</span> <span class="n">biology_topics</span><span class="p">],</span>
+        <span class="s2">&quot;computational_methods&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">method</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">computational_methods</span><span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">article</span></div>
+
+
+
+<div class="viewcode-block" id="get_articles">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_db.get_articles">[docs]</a>
+<span class="k">def</span> <span class="nf">get_articles</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get all articles from the database.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    database : str</span>
+<span class="sd">        The name of the database to retrieve the articles from.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of dictionaries containing the article information and model responses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+
+    <span class="c1"># check if the database exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+    
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT * FROM article_info&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">articles</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">articles_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">articles</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT * FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">model_responses</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT peptide FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">peptides</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT protein FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">proteins</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT domain FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">domains</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT chemistry FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">chemistry_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT biology FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">biology_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT computational_method FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],),</span>
+        <span class="p">)</span>
+        <span class="n">computational_methods</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">article_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="s2">&quot;journal&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+            <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
+            <span class="s2">&quot;scidir/pmc&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span>
+            <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+            <span class="s2">&quot;score_justification&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+            <span class="s2">&quot;peptides&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">peptide</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">peptide</span> <span class="ow">in</span> <span class="n">peptides</span><span class="p">],</span>
+            <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">protein</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">proteins</span><span class="p">],</span>
+            <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">domain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">domains</span><span class="p">],</span>
+            <span class="s2">&quot;chemistry_topics&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">chemistry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">chemistry</span> <span class="ow">in</span> <span class="n">chemistry_topics</span><span class="p">],</span>
+            <span class="s2">&quot;biology_topics&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">biology</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">biology</span> <span class="ow">in</span> <span class="n">biology_topics</span><span class="p">],</span>
+            <span class="s2">&quot;computational_methods&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">method</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">computational_methods</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">articles_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">article_dict</span><span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">articles_list</span></div>
+
+
+
+<div class="viewcode-block" id="update_article">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/article_db/index.html#peptidedigest.article_db.update_article">[docs]</a>
+<span class="k">def</span> <span class="nf">update_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="p">,</span> <span class="n">model_responses</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the model responses for an article in the database.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    database : str</span>
+<span class="sd">        The name of the database to update the article in.</span>
+<span class="sd">    doi : str</span>
+<span class="sd">        The DOI of the article to update.</span>
+<span class="sd">    model_responses : dict</span>
+<span class="sd">        A dictionary containing the updated model responses.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        The model responses for the article are updated in the database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+
+    <span class="c1"># check if the database exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+    
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;UPDATE model_responses SET bullet_points = ?, summary = ?, metadata = ?, score = ?, score_justification = ? </span>
+<span class="sd">                 WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;bullet_points&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">],</span>
+            <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;score_justification&quot;</span><span class="p">],</span>
+            <span class="n">doi</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">peptide</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO peptides (doi, peptide) </span>
+<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">peptide</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO proteins (doi, protein) </span>
+<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">protein</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO domains (doi, domain) </span>
+<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">domain</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">chemistry</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry_topics&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) </span>
+<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">chemistry</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">biology</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology_topics&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO biology_topics (doi, biology) </span>
+<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">biology</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO computational_methods (doi, computational_method) </span>
+<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">method</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Joshua Blomgren. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.1.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
