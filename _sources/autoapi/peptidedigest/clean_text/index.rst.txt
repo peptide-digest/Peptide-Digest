@@ -1,0 +1,58 @@
+:py:mod:`peptidedigest.clean_text`
+==================================
+
+.. py:module:: peptidedigest.clean_text
+
+.. autoapi-nested-parse::
+
+   Functions to clean text data.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   peptidedigest.clean_text.split_into_chunks
+   peptidedigest.clean_text.clean_summary
+   peptidedigest.clean_text.extract_metadata
+
+
+
+.. py:function:: split_into_chunks(text, chunk_size)
+
+   Splits a given text into chunks of approximately 'chunk_size' words.
+
+   :Parameters: * **text** (*str*) -- The text to split into chunks.
+                * **chunk_size** (*int*) -- The approximate number of words to include in each chunk.
+
+   :returns: **chunks** -- A list of text chunks, each containing approximately 'chunk_size' words.
+   :rtype: list of str
+
+
+.. py:function:: clean_summary(text)
+
+   Cleans a summary text by removing unwanted patterns and phrases.
+
+   :Parameters: **text** (*str*) -- The summary text to clean.
+
+   :returns: **cleaned_text** -- The cleaned summary text.
+   :rtype: str
+
+
+.. py:function:: extract_metadata(metadata_text)
+
+   Extract peptides, proteins, domains of interest, chemistry discussed,
+   biology discussed, and computational methods discussed from the model metadata text.
+
+   :Parameters: **metadata_text** (*str*) -- The model metadata text to be parsed.
+
+   :returns: A dictionary containing the extracted metadata as lists.
+   :rtype: dict
+
+

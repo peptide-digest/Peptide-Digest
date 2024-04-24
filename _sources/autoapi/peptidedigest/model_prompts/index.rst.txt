@@ -1,0 +1,42 @@
+:py:mod:`peptidedigest.model_prompts`
+=====================================
+
+.. py:module:: peptidedigest.model_prompts
+
+.. autoapi-nested-parse::
+
+   Functions for generating model prompts for the Peptide Digest LLM.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   peptidedigest.model_prompts.summarize_article_segments
+   peptidedigest.model_prompts.summarize_article_meta
+   peptidedigest.model_prompts.score_texts_peptide_research
+
+
+
+.. py:function:: summarize_article_segments(fulltext, tokenizer, model)
+
+   Summarizes a scientific article into bullet points and a concise summary.
+
+   :Parameters: **fulltext** (*list of str*) -- A list of text chunks from a scientific article.
+
+   :returns: * **final_summary** (*str*) -- A concise summary of the scientific article.
+             * **bullet_points** (*str*) -- Bullet points summarizing the scientific article.
+
+
+.. py:function:: summarize_article_meta(fulltext, tokenizer, model)
+
+
+.. py:function:: score_texts_peptide_research(texts_to_score, summary, bullet_points, metadata, tokenizer, model)
+
+

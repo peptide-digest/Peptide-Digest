@@ -1,0 +1,89 @@
+:py:mod:`peptidedigest.article_processing`
+==========================================
+
+.. py:module:: peptidedigest.article_processing
+
+.. autoapi-nested-parse::
+
+   Functions to process and analyze articles using the model.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   peptidedigest.article_processing.process_scidir_article
+   peptidedigest.article_processing.process_multiple_scidir_articles
+   peptidedigest.article_processing.process_pmc_article
+   peptidedigest.article_processing.process_multiple_pmc_articles
+
+
+
+.. py:function:: process_scidir_article(database, tokenizer, model, api_key, doi=None, pii=None, url=None, chunk_size=4200)
+
+   Process a ScienceDirect article, summarize the article using the model, and store the information in the database.
+
+   :Parameters: * **database** (*str*) -- The database to store the processed article information.
+                * **tokenizer** (*transformers.PreTrainedTokenizer*) -- The tokenizer to use for the model.
+                * **model** (*transformers.PreTrainedModel*) -- The model to use to process the article.
+                * **api_key** (*str*) -- The API key for the ScienceDirect API. API keys can be obtained by creating an account at https://dev.elsevier.com/.
+                * **doi** (*str, optional*) -- The DOI of the article to be processed.
+                * **pii** (*str, optional*) -- The PII of the article to be processed.
+                * **url** (*str, optional*) -- The URL of the article to be processed.
+                * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+
+   :returns: The processed article information is stored in the database.
+   :rtype: None
+
+
+.. py:function:: process_multiple_scidir_articles(database, tokenizer, model, api_key, dois=None, piis=None, urls=None, chunk_size=4200)
+
+   Process multiple ScienceDirect articles, summarize the articles using the model, and store the information in the database.
+
+   :Parameters: * **database** (*str*) -- The database to store the processed articles information.
+                * **tokenizer** (*transformers.PreTrainedTokenizer*) -- The tokenizer to use for the model.
+                * **model** (*transformers.PreTrainedModel*) -- The model to use to process the articles.
+                * **api_key** (*str*) -- The API key for the ScienceDirect API. API keys can be obtained by creating an account at https://dev.elsevier.com/.
+                * **dois** (*list of str, optional*) -- The DOIs of the articles to be processed.
+                * **piis** (*list of str, optional*) -- The PIIs of the articles to be processed.
+                * **urls** (*list of str, optional*) -- The URLs of the articles to be processed.
+                * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+
+   :returns: The processed articles information is stored in the database.
+   :rtype: None
+
+
+.. py:function:: process_pmc_article(database, tokenizer, model, pmc_id, chunk_size=4200)
+
+   Process a PubMed Central article, summarize the article using the model, and store the information in the database.
+
+   :Parameters: * **database** (*str*) -- The database to store the processed article information.
+                * **tokenizer** (*transformers.PreTrainedTokenizer*) -- The tokenizer to use for the model.
+                * **model** (*transformers.PreTrainedModel*) -- The model to use to process the article.
+                * **pmc_id** (*str*) -- The PMC ID of the article to be processed.
+                * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+
+   :returns: The processed article information is stored in the database.
+   :rtype: None
+
+
+.. py:function:: process_multiple_pmc_articles(database, tokenizer, model, pmc_ids, chunk_size=4200)
+
+   Process multiple PubMed Central articles, summarize the articles using the model, and store the information in the database.
+
+   :Parameters: * **database** (*str*) -- The database to store the processed articles information.
+                * **tokenizer** (*transformers.PreTrainedTokenizer*) -- The tokenizer to use for the model.
+                * **model** (*transformers.PreTrainedModel*) -- The model to use to process the articles.
+                * **pmc_ids** (*list of str*) -- The PMC IDs of the articles to be processed.
+                * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+
+   :returns: The processed articles information is stored in the database.
+   :rtype: None
+
+

@@ -1,0 +1,83 @@
+:py:mod:`peptidedigest.article_db`
+==================================
+
+.. py:module:: peptidedigest.article_db
+
+.. autoapi-nested-parse::
+
+   Functions for creating and managing a SQLite database for storing articles and their model responses.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   peptidedigest.article_db.create_database
+   peptidedigest.article_db.insert_article
+   peptidedigest.article_db.get_article
+   peptidedigest.article_db.get_articles
+   peptidedigest.article_db.update_article
+
+
+
+.. py:function:: create_database(name)
+
+   Create a SQLite database with the given name.
+
+   :Parameters: **name** (*str*) -- The name of the database to create.
+
+   :returns: The database is created in the current working directory.
+   :rtype: None
+
+
+.. py:function:: insert_article(database, article_info, model_responses=None)
+
+   Insert an article and its model responses into the database.
+
+   :Parameters: * **database** (*str*) -- The name of the database to insert the article into.
+                * **article_info** (*dict*) -- A dictionary containing the article information.
+                * **model_responses** (*dict*) -- A dictionary containing the model responses for the article.
+
+   :returns: The article and model responses are inserted into the database.
+   :rtype: None
+
+
+.. py:function:: get_article(database, doi)
+
+   Get the article information and model responses for a given DOI.
+
+   :Parameters: * **database** (*str*) -- The name of the database to retrieve the article from.
+                * **doi** (*str*) -- The DOI of the article to retrieve.
+
+   :returns: A dictionary containing the article information and model responses.
+   :rtype: dict
+
+
+.. py:function:: get_articles(database)
+
+   Get all articles from the database.
+
+   :Parameters: **database** (*str*) -- The name of the database to retrieve the articles from.
+
+   :returns: A list of dictionaries containing the article information and model responses.
+   :rtype: list
+
+
+.. py:function:: update_article(database, doi, model_responses)
+
+   Update the model responses for an article in the database.
+
+   :Parameters: * **database** (*str*) -- The name of the database to update the article in.
+                * **doi** (*str*) -- The DOI of the article to update.
+                * **model_responses** (*dict*) -- A dictionary containing the updated model responses.
+
+   :returns: The model responses for the article are updated in the database.
+   :rtype: None
+
+
