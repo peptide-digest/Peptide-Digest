@@ -109,3 +109,5 @@ ENV/
 */_version.py
 
 *.ruff_cache/
+
+.DS_Store

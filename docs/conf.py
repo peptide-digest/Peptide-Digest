@@ -17,8 +17,6 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-import peptidedigest
-
 
 # -- Project information -----------------------------------------------------
 
@@ -43,19 +41,35 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosummary',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.extlinks',
+    "autoapi.extension",
+    #'sphinx.ext.autosummary',
+    #'sphinx.ext.autodoc',
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.extlinks",
+    "sphinx_design",
+    "sphinx_copybutton",
+]
+autoapi_dirs = ["../peptidedigest"]
+autoapi_ignore = ["*/tests/*", "*_version.py"]
+
+autoapi_options = [
+    "members",
+    "undoc-members",
+    #'private-members',
+    #'special-members',
+    "show-inheritance",
+    "show-module-summary",
+    "imported-members",
 ]
 
-autosummary_generate = True
+# autosummary_generate = True	# or delete this
 napoleon_google_docstring = False
 napoleon_use_param = False
 napoleon_use_ivar = True
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -74,7 +88,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -90,13 +104,25 @@ pygments_style = 'default'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = "pydata_sphinx_theme"
+
+# Logo
+html_logo = "_static/pd-logo.png"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "github_url": "https://github.com/peptide-digest/PeptideDigest",
+    "logo": {
+        "image_light": "pd-logo.png",
+        "image_dark": "pd-logo.png",
+        "text": "ScienceScraper",
+    },
+    "pygment_light_style": "default",
+    "pygment_dark_style": "native",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

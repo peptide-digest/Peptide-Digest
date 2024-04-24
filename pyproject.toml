@@ -26,6 +26,9 @@ dependencies = [
     "lxml==5.1.0",
     "requests",
     "beautifulsoup4",
+    "torch",
+    "transformers",
+    "git+https://github.com/peptide-digest/ScienceScraper.git"
 ]
 
 # Update the urls once the hosting is set up.
