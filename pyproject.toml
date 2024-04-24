@@ -28,7 +28,7 @@ dependencies = [
     "beautifulsoup4",
     "torch",
     "transformers",
-    "sciencescraper @ git+ssh://git@github.com/peptide-digest/ScienceScraper.git#egg=sciencescraper",
+    "sciencescraper @ git+https://github.com/peptide-digest/ScienceScraper.git#egg=sciencescraper",
 ]
 
 # Update the urls once the hosting is set up.
