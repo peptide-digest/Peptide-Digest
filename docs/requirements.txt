@@ -6,5 +6,5 @@ sphinx_copybutton
 lxml==5.1.0
 requests
 beautifulsoup4
--e git:https://github.com/peptide-digest/ScienceScraper.git
+git+ssh://git@github.com/peptide-digest/ScienceScraper.git#egg=sciencescraper
 -e ..
