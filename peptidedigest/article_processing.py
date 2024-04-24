@@ -2,7 +2,7 @@
 Functions to process and analyze articles using the model.
 """
 
-import sciencedirect as scraper
+import sciencescraper as scraper
 
 from .article_db import insert_article
 from .model_prompts import (
