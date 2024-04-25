@@ -35,13 +35,13 @@ Functions
    :rtype: list of str
 
 
-.. py:function:: clean_summary(text)
+.. py:function:: clean_summary(summary_text)
 
    Cleans a summary text by removing unwanted patterns and phrases.
 
-   :Parameters: **text** (*str*) -- The summary text to clean.
+   :Parameters: **summary_text** (*str*) -- The summary text to clean.
 
-   :returns: **cleaned_text** -- The cleaned summary text.
+   :returns: **cleaned_summary** -- The cleaned summary text.
    :rtype: str
 
 

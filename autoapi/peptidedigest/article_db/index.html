@@ -424,7 +424,7 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.article_db.insert_article" title="peptidedigest.article_db.insert_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insert_article</span></code></a>(database, article_info[, model_responses])</p></td>
 <td><p>Insert an article and its model responses into the database.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.article_db.get_article" title="peptidedigest.article_db.get_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_article</span></code></a>(database, doi)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.article_db.get_article" title="peptidedigest.article_db.get_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_article</span></code></a>(database[, doi, pmc_id])</p></td>
 <td><p>Get the article information and model responses for a given DOI.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.article_db.get_articles" title="peptidedigest.article_db.get_articles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_articles</span></code></a>(database)</p></td>
@@ -432,6 +432,12 @@ document.write(`
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.article_db.update_article" title="peptidedigest.article_db.update_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_article</span></code></a>(database, doi, model_responses)</p></td>
 <td><p>Update the model responses for an article in the database.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.article_db.check_article_exists" title="peptidedigest.article_db.check_article_exists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_article_exists</span></code></a>(database, value, column)</p></td>
+<td><p>Check if an article with the given value in the specified column exists in the database.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.article_db.delete_article" title="peptidedigest.article_db.delete_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_article</span></code></a>(database[, doi, pmc_id])</p></td>
+<td><p>Delete an article and its model responses from the database.</p></td>
 </tr>
 </tbody>
 </table>
@@ -475,13 +481,14 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.article_db.get_article">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.article_db.</span></span><span class="sig-name descname"><span class="pre">get_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/peptidedigest/article_db.html#get_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.article_db.get_article" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.article_db.</span></span><span class="sig-name descname"><span class="pre">get_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/peptidedigest/article_db.html#get_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.article_db.get_article" title="Link to this definition">#</a></dt>
 <dd><p>Get the article information and model responses for a given DOI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>database</strong> (<em>str</em>) – The name of the database to retrieve the article from.</p></li>
 <li><p><strong>doi</strong> (<em>str</em>) – The DOI of the article to retrieve.</p></li>
+<li><p><strong>pmc_id</strong> (<em>str</em>) – The PMC ID of the article to retrieve.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -524,6 +531,48 @@ document.write(`
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The model responses for the article are updated in the database.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="peptidedigest.article_db.check_article_exists">
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.article_db.</span></span><span class="sig-name descname"><span class="pre">check_article_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/peptidedigest/article_db.html#check_article_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.article_db.check_article_exists" title="Link to this definition">#</a></dt>
+<dd><p>Check if an article with the given value in the specified column exists in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>str</em>) – The name of the database to check for the article.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The value to check for in the specified column.</p></li>
+<li><p><strong>column</strong> (<em>str</em>) – The column to check for the value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the article exists, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="peptidedigest.article_db.delete_article">
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.article_db.</span></span><span class="sig-name descname"><span class="pre">delete_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/peptidedigest/article_db.html#delete_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.article_db.delete_article" title="Link to this definition">#</a></dt>
+<dd><p>Delete an article and its model responses from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>str</em>) – The name of the database to delete the article from.</p></li>
+<li><p><strong>doi</strong> (<em>str</em>) – The DOI of the article to delete.</p></li>
+<li><p><strong>pmc_id</strong> (<em>str</em>) – The PMC ID of the article to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The article and model responses are deleted from the database.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
@@ -588,6 +637,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.article_db.get_article"><code class="docutils literal notranslate"><span class="pre">get_article()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.article_db.get_articles"><code class="docutils literal notranslate"><span class="pre">get_articles()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.article_db.update_article"><code class="docutils literal notranslate"><span class="pre">update_article()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.article_db.check_article_exists"><code class="docutils literal notranslate"><span class="pre">check_article_exists()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.article_db.delete_article"><code class="docutils literal notranslate"><span class="pre">delete_article()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -417,10 +417,11 @@ document.write(`
 <span class="s2">                    journal TEXT,</span>
 <span class="s2">                    publisher TEXT,</span>
 <span class="s2">                    date DATE,</span>
-<span class="s2">                    url TEXT,</span>
+<span class="s2">                    url TEXT UNIQUE,</span>
 <span class="s2">                    doi TEXT UNIQUE,</span>
 <span class="s2">                    keywords TEXT,</span>
-<span class="s2">                    scidir_pmc TEXT</span>
+<span class="s2">                    scidir_pmc TEXT,</span>
+<span class="s2">                    pmc_id TEXT UNIQUE</span>
 <span class="s2">                )&quot;&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS model_responses (</span>
@@ -512,8 +513,8 @@ document.write(`
 
     <span class="c1"># Insert article information</span>
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO article_info (title, authors, journal, publisher, date, url, doi, keywords, scidir_pmc)</span>
-<span class="sd">                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO article_info (title, authors, journal, publisher, date, url, doi, keywords, scidir_pmc, pmc_id)</span>
+<span class="sd">                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
         <span class="p">(</span>
             <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span>
             <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]),</span>
@@ -524,6 +525,7 @@ document.write(`
             <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span>
             <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;keywords&quot;</span><span class="p">]),</span>
             <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;scidir/pmc&quot;</span><span class="p">],</span>
+            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;pmc_id&quot;</span><span class="p">]</span>
         <span class="p">),</span>
     <span class="p">)</span>
 
@@ -546,59 +548,67 @@ document.write(`
         <span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO peptides (doi, peptide) </span>
-<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span>
-            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">])</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
+    <span class="c1"># test</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO proteins (doi, protein) </span>
+    <span class="k">for</span> <span class="n">peptide</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO peptides (doi, peptide) </span>
 <span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span>
-            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">])</span>
+            <span class="p">(</span>
+                <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+                <span class="n">peptide</span>
+            <span class="p">)</span>
         <span class="p">)</span>
-    <span class="p">)</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO domains (doi, domain) </span>
+    <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO proteins (doi, protein) </span>
 <span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span>
-            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">])</span>
+            <span class="p">(</span>
+                <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+                <span class="n">protein</span>
+            <span class="p">)</span>
         <span class="p">)</span>
-    <span class="p">)</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) </span>
+    <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO domains (doi, domain) </span>
 <span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span>
-            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">])</span>
+            <span class="p">(</span>
+                <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+                <span class="n">domain</span>
+            <span class="p">)</span>
         <span class="p">)</span>
-    <span class="p">)</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO biology_topics (doi, biology) </span>
+    <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) </span>
 <span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span>
-            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">])</span>
+            <span class="p">(</span>
+                <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+                <span class="n">topic</span>
+            <span class="p">)</span>
         <span class="p">)</span>
-    <span class="p">)</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO computational_methods (doi, computational_method) </span>
+    <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO biology_topics (doi, biology) </span>
 <span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span>
-            <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">])</span>
+            <span class="p">(</span>
+                <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+                <span class="n">topic</span>
+            <span class="p">)</span>
         <span class="p">)</span>
-    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">]:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO computational_methods (doi, computational_method) </span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> 
+                <span class="n">method</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
@@ -607,7 +617,7 @@ document.write(`
 
 <div class="viewcode-block" id="get_article">
 <a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_db.get_article">[docs]</a>
-<span class="k">def</span> <span class="nf">get_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">pmc_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the article information and model responses for a given DOI.</span>
 
@@ -617,69 +627,133 @@ document.write(`
 <span class="sd">        The name of the database to retrieve the article from.</span>
 <span class="sd">    doi : str</span>
 <span class="sd">        The DOI of the article to retrieve.</span>
+<span class="sd">    pmc_id : str</span>
+<span class="sd">        The PMC ID of the article to retrieve.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    dict</span>
 <span class="sd">        A dictionary containing the article information and model responses.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># check if the database exists</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2">.db does not exist.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">doi</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pmc_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either DOI or PMC ID must be provided.&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pmc_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only one of DOI or PMC ID should be provided.&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="p">,</span> <span class="s2">&quot;doi&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Article with DOI </span><span class="si">{</span><span class="n">doi</span><span class="si">}</span><span class="s2"> does not exist in the database.&quot;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">pmc_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">pmc_id</span><span class="p">,</span> <span class="s2">&quot;pmc_id&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Article with PMC ID </span><span class="si">{</span><span class="n">pmc_id</span><span class="si">}</span><span class="s2"> does not exist in the database.&quot;</span><span class="p">)</span>
     
     <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
     <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT * FROM article_info WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">article_info</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT * FROM article_info WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">article_info</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT * FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">model_responses</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT * FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">model_responses</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT peptide FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">peptides</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT peptide FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">peptides</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT protein FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">proteins</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT protein FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">proteins</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT domain FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">domains</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT domain FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">domains</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT chemistry FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">chemistry_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT chemistry FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">chemistry_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT biology FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">biology_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT biology FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">biology_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;SELECT computational_method FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
-    <span class="p">)</span>
-    <span class="n">computational_methods</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT computational_method FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">computational_methods</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 
-    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="k">elif</span> <span class="n">pmc_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT * FROM article_info WHERE pmc_id = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">article_info</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT * FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">model_responses</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT peptide FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">peptides</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT protein FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">proteins</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT domain FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">domains</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT chemistry FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">chemistry_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT biology FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">biology_topics</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;SELECT computational_method FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">computational_methods</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="n">article</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
@@ -691,6 +765,7 @@ document.write(`
         <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
         <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
         <span class="s2">&quot;scidir/pmc&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span>  
+        <span class="s2">&quot;pmc_id&quot;</span><span class="p">:</span> <span class="n">article_info</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span>  
         <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
         <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
         <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
@@ -792,6 +867,7 @@ document.write(`
             <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
             <span class="s2">&quot;scidir/pmc&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span>
+            <span class="s2">&quot;pmc_id&quot;</span><span class="p">:</span> <span class="n">article</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span>
             <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
             <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
             <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">model_responses</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
@@ -860,8 +936,11 @@ document.write(`
     <span class="k">for</span> <span class="n">peptide</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">]:</span>
         <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO peptides (doi, peptide) </span>
-<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">peptide</span><span class="p">),</span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">doi</span><span class="p">,</span>
+                <span class="n">peptide</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
@@ -871,8 +950,11 @@ document.write(`
     <span class="k">for</span> <span class="n">protein</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">]:</span>
         <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO proteins (doi, protein) </span>
-<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">protein</span><span class="p">),</span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">doi</span><span class="p">,</span>
+                <span class="n">protein</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
@@ -882,30 +964,40 @@ document.write(`
     <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">]:</span>
         <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO domains (doi, domain) </span>
-<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">domain</span><span class="p">),</span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">doi</span><span class="p">,</span>
+                <span class="n">domain</span>
+            <span class="p">)</span>
         <span class="p">)</span>
+    
 
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
         <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
     <span class="p">)</span>
-    <span class="k">for</span> <span class="n">chemistry</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry_topics&quot;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">chemistry</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">]:</span>
         <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) </span>
-<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">chemistry</span><span class="p">),</span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">doi</span><span class="p">,</span>
+                <span class="n">chemistry</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
         <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
     <span class="p">)</span>
-    <span class="k">for</span> <span class="n">biology</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology_topics&quot;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">biology</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">]:</span>
         <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO biology_topics (doi, biology) </span>
-<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">biology</span><span class="p">),</span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">doi</span><span class="p">,</span>
+                <span class="n">biology</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
@@ -915,8 +1007,157 @@ document.write(`
     <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">model_responses</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">]:</span>
         <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;INSERT OR IGNORE INTO computational_methods (doi, computational_method) </span>
-<span class="sd">                     VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">doi</span><span class="p">,</span> <span class="n">method</span><span class="p">),</span>
+<span class="sd">                 VALUES (?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">doi</span><span class="p">,</span>
+                <span class="n">method</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="check_article_exists">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_db.check_article_exists">[docs]</a>
+<span class="k">def</span> <span class="nf">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if an article with the given value in the specified column exists in the database.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    database : str</span>
+<span class="sd">        The name of the database to check for the article.</span>
+<span class="sd">    value : str</span>
+<span class="sd">        The value to check for in the specified column.</span>
+<span class="sd">    column : str</span>
+<span class="sd">        The column to check for the value.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if the article exists, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+
+    <span class="c1"># check if the database exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+    
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&quot;&quot;SELECT * FROM article_info WHERE </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2"> = ?&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">value</span><span class="p">,),</span>
+    <span class="p">)</span>
+    <span class="n">article</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">article</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    
+
+<div class="viewcode-block" id="delete_article">
+<a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_db.delete_article">[docs]</a>
+<span class="k">def</span> <span class="nf">delete_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmc_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delete an article and its model responses from the database.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    database : str</span>
+<span class="sd">        The name of the database to delete the article from.</span>
+<span class="sd">    doi : str</span>
+<span class="sd">        The DOI of the article to delete.</span>
+<span class="sd">    pmc_id : str</span>
+<span class="sd">        The PMC ID of the article to delete.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        The article and model responses are deleted from the database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span> <span class="o">+</span> <span class="s2">&quot;.db&quot;</span>
+
+    <span class="c1"># check if the database exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">database</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database </span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
+    
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM article_info WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">doi</span><span class="p">,),</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pmc_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM article_info WHERE pmc_id = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM model_responses WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM peptides WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM proteins WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM domains WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM chemistry_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM biology_topics WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;DELETE FROM computational_methods WHERE doi = ?&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">pmc_id</span><span class="p">,),</span>
         <span class="p">)</span>
 
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>

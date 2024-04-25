@@ -25,7 +25,7 @@ Functions
 
 
 
-.. py:function:: process_scidir_article(database, tokenizer, model, api_key, doi=None, pii=None, url=None, chunk_size=4200)
+.. py:function:: process_scidir_article(database, tokenizer, model, api_key, doi=None, pii=None, url=None, chunk_size=4200, update=False)
 
    Process a ScienceDirect article, summarize the article using the model, and store the information in the database.
 
@@ -37,12 +37,13 @@ Functions
                 * **pii** (*str, optional*) -- The PII of the article to be processed.
                 * **url** (*str, optional*) -- The URL of the article to be processed.
                 * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+                * **update** (*bool, optional*) -- If True, the article will be updated in the database if it already exists. Default is False.
 
    :returns: The processed article information is stored in the database.
    :rtype: None
 
 
-.. py:function:: process_multiple_scidir_articles(database, tokenizer, model, api_key, dois=None, piis=None, urls=None, chunk_size=4200)
+.. py:function:: process_multiple_scidir_articles(database, tokenizer, model, api_key, dois=None, piis=None, urls=None, chunk_size=4200, update=False)
 
    Process multiple ScienceDirect articles, summarize the articles using the model, and store the information in the database.
 
@@ -54,12 +55,13 @@ Functions
                 * **piis** (*list of str, optional*) -- The PIIs of the articles to be processed.
                 * **urls** (*list of str, optional*) -- The URLs of the articles to be processed.
                 * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+                * **update** (*bool, optional*) -- If True, the articles will be updated in the database if they already exist. Default is False.
 
    :returns: The processed articles information is stored in the database.
    :rtype: None
 
 
-.. py:function:: process_pmc_article(database, tokenizer, model, pmc_id, chunk_size=4200)
+.. py:function:: process_pmc_article(database, tokenizer, model, pmc_id, chunk_size=4200, update=False)
 
    Process a PubMed Central article, summarize the article using the model, and store the information in the database.
 
@@ -68,12 +70,13 @@ Functions
                 * **model** (*transformers.PreTrainedModel*) -- The model to use to process the article.
                 * **pmc_id** (*str*) -- The PMC ID of the article to be processed.
                 * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+                * **update** (*bool, optional*) -- If True, the article will be updated in the database if it already exists. Default is False.
 
    :returns: The processed article information is stored in the database.
    :rtype: None
 
 
-.. py:function:: process_multiple_pmc_articles(database, tokenizer, model, pmc_ids, chunk_size=4200)
+.. py:function:: process_multiple_pmc_articles(database, tokenizer, model, pmc_ids, chunk_size=4200, update=False)
 
    Process multiple PubMed Central articles, summarize the articles using the model, and store the information in the database.
 
@@ -82,6 +85,7 @@ Functions
                 * **model** (*transformers.PreTrainedModel*) -- The model to use to process the articles.
                 * **pmc_ids** (*list of str*) -- The PMC IDs of the articles to be processed.
                 * **chunk_size** (*int, optional*) -- The size of the chunks to split the full text into. Default is 4200.
+                * **update** (*bool, optional*) -- If True, the articles will be updated in the database if they already exist. Default is False.
 
    :returns: The processed articles information is stored in the database.
    :rtype: None

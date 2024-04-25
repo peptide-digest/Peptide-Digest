@@ -23,6 +23,8 @@ Functions
    peptidedigest.article_db.get_article
    peptidedigest.article_db.get_articles
    peptidedigest.article_db.update_article
+   peptidedigest.article_db.check_article_exists
+   peptidedigest.article_db.delete_article
 
 
 
@@ -48,12 +50,13 @@ Functions
    :rtype: None
 
 
-.. py:function:: get_article(database, doi)
+.. py:function:: get_article(database, doi=None, pmc_id=None)
 
    Get the article information and model responses for a given DOI.
 
    :Parameters: * **database** (*str*) -- The name of the database to retrieve the article from.
                 * **doi** (*str*) -- The DOI of the article to retrieve.
+                * **pmc_id** (*str*) -- The PMC ID of the article to retrieve.
 
    :returns: A dictionary containing the article information and model responses.
    :rtype: dict
@@ -78,6 +81,30 @@ Functions
                 * **model_responses** (*dict*) -- A dictionary containing the updated model responses.
 
    :returns: The model responses for the article are updated in the database.
+   :rtype: None
+
+
+.. py:function:: check_article_exists(database, value, column)
+
+   Check if an article with the given value in the specified column exists in the database.
+
+   :Parameters: * **database** (*str*) -- The name of the database to check for the article.
+                * **value** (*str*) -- The value to check for in the specified column.
+                * **column** (*str*) -- The column to check for the value.
+
+   :returns: True if the article exists, False otherwise.
+   :rtype: bool
+
+
+.. py:function:: delete_article(database, doi=None, pmc_id=None)
+
+   Delete an article and its model responses from the database.
+
+   :Parameters: * **database** (*str*) -- The name of the database to delete the article from.
+                * **doi** (*str*) -- The DOI of the article to delete.
+                * **pmc_id** (*str*) -- The PMC ID of the article to delete.
+
+   :returns: The article and model responses are deleted from the database.
    :rtype: None
 
 

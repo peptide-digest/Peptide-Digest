@@ -421,7 +421,7 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.clean_text.split_into_chunks" title="peptidedigest.clean_text.split_into_chunks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_into_chunks</span></code></a>(text, chunk_size)</p></td>
 <td><p>Splits a given text into chunks of approximately 'chunk_size' words.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.clean_text.clean_summary" title="peptidedigest.clean_text.clean_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_summary</span></code></a>(text)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.clean_text.clean_summary" title="peptidedigest.clean_text.clean_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_summary</span></code></a>(summary_text)</p></td>
 <td><p>Cleans a summary text by removing unwanted patterns and phrases.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.clean_text.extract_metadata" title="peptidedigest.clean_text.extract_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_metadata</span></code></a>(metadata_text)</p></td>
@@ -451,14 +451,14 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.clean_text.clean_summary">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.clean_text.</span></span><span class="sig-name descname"><span class="pre">clean_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/peptidedigest/clean_text.html#clean_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.clean_text.clean_summary" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.clean_text.</span></span><span class="sig-name descname"><span class="pre">clean_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">summary_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/peptidedigest/clean_text.html#clean_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.clean_text.clean_summary" title="Link to this definition">#</a></dt>
 <dd><p>Cleans a summary text by removing unwanted patterns and phrases.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The summary text to clean.</p>
+<dd class="field-odd"><p><strong>summary_text</strong> (<em>str</em>) – The summary text to clean.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>cleaned_text</strong> – The cleaned summary text.</p>
+<dd class="field-even"><p><strong>cleaned_summary</strong> – The cleaned summary text.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>

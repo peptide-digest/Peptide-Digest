@@ -390,7 +390,7 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">sciencescraper</span> <span class="k">as</span> <span class="nn">scraper</span>
 
-<span class="kn">from</span> <span class="nn">.article_db</span> <span class="kn">import</span> <span class="n">insert_article</span>
+<span class="kn">from</span> <span class="nn">.article_db</span> <span class="kn">import</span> <span class="n">insert_article</span><span class="p">,</span> <span class="n">check_article_exists</span><span class="p">,</span> <span class="n">update_article</span>
 <span class="kn">from</span> <span class="nn">.model_prompts</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">summarize_article_segments</span><span class="p">,</span>
     <span class="n">summarize_article_meta</span><span class="p">,</span>
@@ -399,13 +399,14 @@ document.write(`
 <span class="kn">from</span> <span class="nn">.clean_text</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">split_into_chunks</span><span class="p">,</span>
     <span class="n">extract_metadata</span><span class="p">,</span>
+    <span class="n">clean_summary</span><span class="p">,</span>
 <span class="p">)</span>
 
 
 <div class="viewcode-block" id="process_scidir_article">
 <a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_processing.process_scidir_article">[docs]</a>
 <span class="k">def</span> <span class="nf">process_scidir_article</span><span class="p">(</span>
-    <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span>
+    <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process a ScienceDirect article, summarize the article using the model, and store the information in the database.</span>
@@ -428,6 +429,8 @@ document.write(`
 <span class="sd">        The URL of the article to be processed.</span>
 <span class="sd">    chunk_size : int, optional</span>
 <span class="sd">        The size of the chunks to split the full text into. Default is 4200.</span>
+<span class="sd">    update : bool, optional</span>
+<span class="sd">        If True, the article will be updated in the database if it already exists. Default is False.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -435,10 +438,25 @@ document.write(`
 <span class="sd">        The processed article information is stored in the database.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Check if the article is already in the database</span>
+    <span class="k">if</span> <span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">article_exists</span> <span class="o">=</span> <span class="n">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="p">,</span> <span class="s2">&quot;doi&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">article_exists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">update</span><span class="p">:</span>
+            <span class="k">return</span>
+    <span class="k">elif</span> <span class="n">pii</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">article_exists</span> <span class="o">=</span> <span class="n">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">pii</span><span class="p">,</span> <span class="s2">&quot;pii&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">article_exists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">update</span><span class="p">:</span>
+            <span class="k">return</span>
+    <span class="k">elif</span> <span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">article_exists</span> <span class="o">=</span> <span class="n">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">article_exists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">update</span><span class="p">:</span>
+            <span class="k">return</span>
+        
     <span class="n">article_info</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">get_scidir_article_info</span><span class="p">(</span>
         <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="n">pii</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span>
     <span class="p">)</span>
     <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;scidir/pmc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;scidir&quot;</span>
+    <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;pmc_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Check if the article has an abstract</span>
     <span class="k">if</span> <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;abstract&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Abstract not found in article.&quot;</span><span class="p">:</span>
@@ -466,9 +484,9 @@ document.write(`
     <span class="p">)</span>
 
     <span class="n">model_output</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">,</span>
-        <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">bullet_points</span><span class="p">,</span>
-        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">metadata</span><span class="p">,</span>
+        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">summary</span><span class="p">),</span>
+        <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">bullet_points</span><span class="p">),</span>
+        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">metadata</span><span class="p">),</span>
         <span class="s2">&quot;peptides&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">],</span>
         <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">],</span>
         <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">],</span>
@@ -476,10 +494,13 @@ document.write(`
         <span class="s2">&quot;biology&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">],</span>
         <span class="s2">&quot;computational_methods&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">],</span>
         <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
-        <span class="s2">&quot;score_justification&quot;</span><span class="p">:</span> <span class="n">score_justification</span><span class="p">,</span>
+        <span class="s2">&quot;score_justification&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">score_justification</span><span class="p">),</span>
     <span class="p">}</span>
 
-    <span class="n">insert_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">article_info</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">article_exists</span><span class="p">:</span>
+        <span class="n">update_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">insert_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">article_info</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span></div>
 
 
 
@@ -494,6 +515,7 @@ document.write(`
     <span class="n">piis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">urls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span><span class="p">,</span>
+    <span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process multiple ScienceDirect articles, summarize the articles using the model, and store the information in the database.</span>
@@ -516,6 +538,8 @@ document.write(`
 <span class="sd">        The URLs of the articles to be processed.</span>
 <span class="sd">    chunk_size : int, optional</span>
 <span class="sd">        The size of the chunks to split the full text into. Default is 4200.</span>
+<span class="sd">    update : bool, optional</span>
+<span class="sd">        If True, the articles will be updated in the database if they already exist. Default is False.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -525,24 +549,24 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">doi</span> <span class="ow">in</span> <span class="n">dois</span><span class="p">:</span>
         <span class="n">process_scidir_article</span><span class="p">(</span>
-            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span>
+            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
         <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">pii</span> <span class="ow">in</span> <span class="n">piis</span><span class="p">:</span>
         <span class="n">process_scidir_article</span><span class="p">(</span>
-            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="n">pii</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span>
+            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="n">pii</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
         <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
         <span class="n">process_scidir_article</span><span class="p">(</span>
-            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span>
+            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
         <span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="process_pmc_article">
 <a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_processing.process_pmc_article">[docs]</a>
-<span class="k">def</span> <span class="nf">process_pmc_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pmc_id</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">process_pmc_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pmc_id</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process a PubMed Central article, summarize the article using the model, and store the information in the database.</span>
 
@@ -558,6 +582,8 @@ document.write(`
 <span class="sd">        The PMC ID of the article to be processed.</span>
 <span class="sd">    chunk_size : int, optional</span>
 <span class="sd">        The size of the chunks to split the full text into. Default is 4200.</span>
+<span class="sd">    update : bool, optional</span>
+<span class="sd">        If True, the article will be updated in the database if it already exists. Default is False.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -565,8 +591,17 @@ document.write(`
 <span class="sd">        The processed article information is stored in the database.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">article_exists</span> <span class="o">=</span> <span class="n">check_article_exists</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">pmc_id</span><span class="p">,</span> <span class="s2">&quot;pmc_id&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">article_exists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">update</span><span class="p">:</span>
+        <span class="k">return</span>
+
     <span class="n">article_info</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">get_pmc_article_info</span><span class="p">(</span><span class="n">pmc_id</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">article_info</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    
     <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;scidir/pmc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pmc&quot;</span>
+    <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;pmc_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pmc_id</span>
 
     <span class="k">if</span> <span class="p">(</span>
         <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;abstract&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
@@ -595,26 +630,29 @@ document.write(`
     <span class="p">)</span>
 
     <span class="n">model_output</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;model_summary&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">,</span>
-        <span class="s2">&quot;model_bullet_points&quot;</span><span class="p">:</span> <span class="n">bullet_points</span><span class="p">,</span>
-        <span class="s2">&quot;model_metadata&quot;</span><span class="p">:</span> <span class="n">metadata</span><span class="p">,</span>
+        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">summary</span><span class="p">),</span>
+        <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">bullet_points</span><span class="p">),</span>
+        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">metadata</span><span class="p">),</span>
         <span class="s2">&quot;peptides&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;peptides&quot;</span><span class="p">],</span>
         <span class="s2">&quot;proteins&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;proteins&quot;</span><span class="p">],</span>
         <span class="s2">&quot;domains&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;domains&quot;</span><span class="p">],</span>
         <span class="s2">&quot;chemistry&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;chemistry&quot;</span><span class="p">],</span>
         <span class="s2">&quot;biology&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;biology&quot;</span><span class="p">],</span>
         <span class="s2">&quot;computational_methods&quot;</span><span class="p">:</span> <span class="n">extracted_data</span><span class="p">[</span><span class="s2">&quot;computational_methods&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;model_score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
-        <span class="s2">&quot;model_score_justification&quot;</span><span class="p">:</span> <span class="n">score_justification</span><span class="p">,</span>
+        <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+        <span class="s2">&quot;score_justification&quot;</span><span class="p">:</span> <span class="n">clean_summary</span><span class="p">(</span><span class="n">score_justification</span><span class="p">),</span>
     <span class="p">}</span>
 
-    <span class="n">insert_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">article_info</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">article_exists</span><span class="p">:</span>
+        <span class="n">update_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">article_info</span><span class="p">[</span><span class="s2">&quot;doi&quot;</span><span class="p">],</span> <span class="n">model_output</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">insert_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">article_info</span><span class="p">,</span> <span class="n">model_output</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="process_multiple_pmc_articles">
 <a class="viewcode-back" href="../../autoapi/peptidedigest/index.html#peptidedigest.article_processing.process_multiple_pmc_articles">[docs]</a>
-<span class="k">def</span> <span class="nf">process_multiple_pmc_articles</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pmc_ids</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">process_multiple_pmc_articles</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pmc_ids</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4200</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process multiple PubMed Central articles, summarize the articles using the model, and store the information in the database.</span>
 
@@ -630,6 +668,8 @@ document.write(`
 <span class="sd">        The PMC IDs of the articles to be processed.</span>
 <span class="sd">    chunk_size : int, optional</span>
 <span class="sd">        The size of the chunks to split the full text into. Default is 4200.</span>
+<span class="sd">    update : bool, optional</span>
+<span class="sd">        If True, the articles will be updated in the database if they already exist. Default is False.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -638,7 +678,7 @@ document.write(`
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">pmc_id</span> <span class="ow">in</span> <span class="n">pmc_ids</span><span class="p">:</span>
-        <span class="n">process_pmc_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pmc_id</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span></div>
+        <span class="n">process_pmc_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pmc_id</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span><span class="p">)</span></div>
 
 </pre></div>
 

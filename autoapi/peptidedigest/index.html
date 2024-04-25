@@ -429,11 +429,17 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.create_database" title="peptidedigest.create_database"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_database</span></code></a>(name)</p></td>
 <td><p>Create a SQLite database with the given name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.get_article" title="peptidedigest.get_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_article</span></code></a>(database, doi)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.get_article" title="peptidedigest.get_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_article</span></code></a>(database[, doi, pmc_id])</p></td>
 <td><p>Get the article information and model responses for a given DOI.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.get_articles" title="peptidedigest.get_articles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_articles</span></code></a>(database)</p></td>
 <td><p>Get all articles from the database.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.check_article_exists" title="peptidedigest.check_article_exists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_article_exists</span></code></a>(database, value, column)</p></td>
+<td><p>Check if an article with the given value in the specified column exists in the database.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.delete_article" title="peptidedigest.delete_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_article</span></code></a>(database[, doi, pmc_id])</p></td>
+<td><p>Delete an article and its model responses from the database.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.process_scidir_article" title="peptidedigest.process_scidir_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_scidir_article</span></code></a>(database, tokenizer, model, api_key)</p></td>
 <td><p>Process a ScienceDirect article, summarize the article using the model, and store the information in the database.</p></td>
@@ -477,13 +483,14 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.get_article">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">get_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_db.html#get_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.get_article" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">get_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_db.html#get_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.get_article" title="Link to this definition">#</a></dt>
 <dd><p>Get the article information and model responses for a given DOI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>database</strong> (<em>str</em>) – The name of the database to retrieve the article from.</p></li>
 <li><p><strong>doi</strong> (<em>str</em>) – The DOI of the article to retrieve.</p></li>
+<li><p><strong>pmc_id</strong> (<em>str</em>) – The PMC ID of the article to retrieve.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -513,8 +520,50 @@ document.write(`
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="peptidedigest.check_article_exists">
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">check_article_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_db.html#check_article_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.check_article_exists" title="Link to this definition">#</a></dt>
+<dd><p>Check if an article with the given value in the specified column exists in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>str</em>) – The name of the database to check for the article.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The value to check for in the specified column.</p></li>
+<li><p><strong>column</strong> (<em>str</em>) – The column to check for the value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the article exists, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="peptidedigest.delete_article">
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">delete_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_db.html#delete_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.delete_article" title="Link to this definition">#</a></dt>
+<dd><p>Delete an article and its model responses from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>str</em>) – The name of the database to delete the article from.</p></li>
+<li><p><strong>doi</strong> (<em>str</em>) – The DOI of the article to delete.</p></li>
+<li><p><strong>pmc_id</strong> (<em>str</em>) – The PMC ID of the article to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The article and model responses are deleted from the database.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.process_scidir_article">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_scidir_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_scidir_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_scidir_article" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_scidir_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_scidir_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_scidir_article" title="Link to this definition">#</a></dt>
 <dd><p>Process a ScienceDirect article, summarize the article using the model, and store the information in the database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -527,6 +576,7 @@ document.write(`
 <li><p><strong>pii</strong> (<em>str, optional</em>) – The PII of the article to be processed.</p></li>
 <li><p><strong>url</strong> (<em>str, optional</em>) – The URL of the article to be processed.</p></li>
 <li><p><strong>chunk_size</strong> (<em>int, optional</em>) – The size of the chunks to split the full text into. Default is 4200.</p></li>
+<li><p><strong>update</strong> (<em>bool, optional</em>) – If True, the article will be updated in the database if it already exists. Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -540,7 +590,7 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.process_multiple_scidir_articles">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_multiple_scidir_articles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dois</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">urls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_multiple_scidir_articles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_multiple_scidir_articles" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_multiple_scidir_articles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dois</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">urls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_multiple_scidir_articles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_multiple_scidir_articles" title="Link to this definition">#</a></dt>
 <dd><p>Process multiple ScienceDirect articles, summarize the articles using the model, and store the information in the database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -553,6 +603,7 @@ document.write(`
 <li><p><strong>piis</strong> (<em>list of str, optional</em>) – The PIIs of the articles to be processed.</p></li>
 <li><p><strong>urls</strong> (<em>list of str, optional</em>) – The URLs of the articles to be processed.</p></li>
 <li><p><strong>chunk_size</strong> (<em>int, optional</em>) – The size of the chunks to split the full text into. Default is 4200.</p></li>
+<li><p><strong>update</strong> (<em>bool, optional</em>) – If True, the articles will be updated in the database if they already exist. Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -566,7 +617,7 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.process_pmc_article">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_pmc_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_pmc_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_pmc_article" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_pmc_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_pmc_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_pmc_article" title="Link to this definition">#</a></dt>
 <dd><p>Process a PubMed Central article, summarize the article using the model, and store the information in the database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -576,6 +627,7 @@ document.write(`
 <li><p><strong>model</strong> (<em>transformers.PreTrainedModel</em>) – The model to use to process the article.</p></li>
 <li><p><strong>pmc_id</strong> (<em>str</em>) – The PMC ID of the article to be processed.</p></li>
 <li><p><strong>chunk_size</strong> (<em>int, optional</em>) – The size of the chunks to split the full text into. Default is 4200.</p></li>
+<li><p><strong>update</strong> (<em>bool, optional</em>) – If True, the article will be updated in the database if it already exists. Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -589,7 +641,7 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="peptidedigest.process_multiple_pmc_articles">
-<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_multiple_pmc_articles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_multiple_pmc_articles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_multiple_pmc_articles" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">process_multiple_pmc_articles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmc_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_processing.html#process_multiple_pmc_articles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.process_multiple_pmc_articles" title="Link to this definition">#</a></dt>
 <dd><p>Process multiple PubMed Central articles, summarize the articles using the model, and store the information in the database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -599,6 +651,7 @@ document.write(`
 <li><p><strong>model</strong> (<em>transformers.PreTrainedModel</em>) – The model to use to process the articles.</p></li>
 <li><p><strong>pmc_ids</strong> (<em>list of str</em>) – The PMC IDs of the articles to be processed.</p></li>
 <li><p><strong>chunk_size</strong> (<em>int, optional</em>) – The size of the chunks to split the full text into. Default is 4200.</p></li>
+<li><p><strong>update</strong> (<em>bool, optional</em>) – If True, the articles will be updated in the database if they already exist. Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -694,6 +747,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.create_database"><code class="docutils literal notranslate"><span class="pre">create_database()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.get_article"><code class="docutils literal notranslate"><span class="pre">get_article()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.get_articles"><code class="docutils literal notranslate"><span class="pre">get_articles()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.check_article_exists"><code class="docutils literal notranslate"><span class="pre">check_article_exists()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.delete_article"><code class="docutils literal notranslate"><span class="pre">delete_article()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.process_scidir_article"><code class="docutils literal notranslate"><span class="pre">process_scidir_article()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.process_multiple_scidir_articles"><code class="docutils literal notranslate"><span class="pre">process_multiple_scidir_articles()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.process_pmc_article"><code class="docutils literal notranslate"><span class="pre">process_pmc_article()</span></code></a></li>

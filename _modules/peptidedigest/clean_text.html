@@ -419,20 +419,30 @@ document.write(`
 
 <div class="viewcode-block" id="clean_summary">
 <a class="viewcode-back" href="../../autoapi/peptidedigest/clean_text/index.html#peptidedigest.clean_text.clean_summary">[docs]</a>
-<span class="k">def</span> <span class="nf">clean_summary</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">clean_summary</span><span class="p">(</span><span class="n">summary_text</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cleans a summary text by removing unwanted patterns and phrases.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    text : str</span>
+<span class="sd">    summary_text : str</span>
 <span class="sd">        The summary text to clean.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    cleaned_text : str</span>
+<span class="sd">    cleaned_summary : str</span>
 <span class="sd">        The cleaned summary text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Split the summary text by newlines</span>
+    <span class="n">summary_lines</span> <span class="o">=</span> <span class="n">summary_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Remove any lines that start with &quot;##&quot; or contain &quot;Summary&quot;</span>
+    <span class="n">cleaned_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">summary_lines</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;##&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;Summary&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+    <span class="n">cleaned_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">cleaned_lines</span> <span class="k">if</span> <span class="s1">&#39;Sure&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">and</span> <span class="s1">&#39;Here&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+
+    <span class="c1"># Join the cleaned lines back into a single string</span>
+    <span class="n">cleaned_summary</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cleaned_lines</span><span class="p">)</span>
+
     <span class="c1"># Extended patterns and exact phrases to remove</span>
     <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span>
         <span class="sa">r</span><span class="s2">&quot;Sure, here is a summary of the provided text in \d+ sentences:&quot;</span><span class="p">,</span>
@@ -444,22 +454,22 @@ document.write(`
         <span class="sa">r</span><span class="s2">&quot;Sure, here is a summary of the text in \d+ sentences&quot;</span><span class="p">,</span>
         <span class="sa">r</span><span class="s2">&quot;Here is a summary of the text in \d+ sentences:&quot;</span><span class="p">,</span>
         <span class="sa">r</span><span class="s2">&quot;Sure, here is a summary of the text you provided in a single paragraph:&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;&#39;Sure, here is a summary in bullet form of a scientific text&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;Chunk \d+&quot;</span>
     <span class="p">]</span>
 
     <span class="c1"># Remove patterns and exact phrases</span>
     <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;## Summary of the Scientific Article in 5 Sentences&quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+        <span class="k">if</span> <span class="s2">&quot;## Summary of the Scientific Article in 5 Sentences&quot;</span> <span class="ow">in</span> <span class="n">cleaned_summary</span><span class="p">:</span>
+            <span class="n">cleaned_summary</span> <span class="o">=</span> <span class="n">cleaned_summary</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
                 <span class="s2">&quot;## Summary of the Scientific Article in 5 Sentences&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
             <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">cleaned_summary</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cleaned_summary</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="n">text</span></div>
+    <span class="k">return</span> <span class="n">cleaned_summary</span></div>
 
 
-
-<span class="kn">import</span> <span class="nn">re</span>
 
 <div class="viewcode-block" id="extract_metadata">
 <a class="viewcode-back" href="../../autoapi/peptidedigest/clean_text/index.html#peptidedigest.clean_text.extract_metadata">[docs]</a>
