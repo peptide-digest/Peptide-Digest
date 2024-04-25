@@ -26,8 +26,6 @@ dependencies = [
     "lxml==5.1.0",
     "requests",
     "beautifulsoup4",
-    "torch",
-    "transformers",
     "sciencescraper @ git+https://github.com/peptide-digest/ScienceScraper.git#egg=sciencescraper",
 ]
 

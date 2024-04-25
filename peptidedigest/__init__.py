@@ -10,6 +10,8 @@ from . import model_prompts
 from .article_db import create_database
 from .article_db import get_article
 from .article_db import get_articles
+from .article_db import check_article_exists
+from .article_db import delete_article
 
 from .article_processing import process_scidir_article
 from .article_processing import process_multiple_scidir_articles
@@ -21,3 +23,4 @@ from .model_prompts import summarize_article_meta
 from .model_prompts import score_texts_peptide_research
 
 from ._version import __version__
+

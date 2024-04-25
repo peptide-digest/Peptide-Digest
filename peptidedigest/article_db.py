@@ -29,10 +29,11 @@ def create_database(name):
                     journal TEXT,
                     publisher TEXT,
                     date DATE,
-                    url TEXT,
+                    url TEXT UNIQUE,
                     doi TEXT UNIQUE,
                     keywords TEXT,
-                    scidir_pmc TEXT
+                    scidir_pmc TEXT,
+                    pmc_id TEXT UNIQUE
                 )""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS model_responses (
@@ -121,8 +122,8 @@ def insert_article(database, article_info, model_responses=None):
 
     # Insert article information
     c.execute(
-        """INSERT OR IGNORE INTO article_info (title, authors, journal, publisher, date, url, doi, keywords, scidir_pmc)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        """INSERT OR IGNORE INTO article_info (title, authors, journal, publisher, date, url, doi, keywords, scidir_pmc, pmc_id)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             article_info["title"],
             ", ".join(article_info["authors"]),
@@ -133,6 +134,7 @@ def insert_article(database, article_info, model_responses=None):
             article_info["doi"],
             ", ".join(article_info["keywords"]),
             article_info["scidir/pmc"],
+            article_info["pmc_id"]
         ),
     )
 
@@ -155,65 +157,73 @@ def insert_article(database, article_info, model_responses=None):
         ),
     )
 
-    c.execute(
-        """INSERT OR IGNORE INTO peptides (doi, peptide) 
-                 VALUES (?, ?)""",
-        (
-            article_info["doi"], 
-            "" if model_responses["peptides"] is None else ", ".join(model_responses["peptides"])
-        )
-    )
+    # test
 
-    c.execute(
-        """INSERT OR IGNORE INTO proteins (doi, protein) 
+    for peptide in model_responses["peptides"]:
+        c.execute(
+            """INSERT OR IGNORE INTO peptides (doi, peptide) 
                  VALUES (?, ?)""",
-        (
-            article_info["doi"], 
-            "" if model_responses["proteins"] is None else ", ".join(model_responses["proteins"])
+            (
+                article_info["doi"], 
+                peptide
+            )
         )
-    )
 
-    c.execute(
-        """INSERT OR IGNORE INTO domains (doi, domain) 
+    for protein in model_responses["proteins"]:
+        c.execute(
+            """INSERT OR IGNORE INTO proteins (doi, protein) 
                  VALUES (?, ?)""",
-        (
-            article_info["doi"], 
-            "" if model_responses["domains"] is None else ", ".join(model_responses["domains"])
+            (
+                article_info["doi"], 
+                protein
+            )
         )
-    )
 
-    c.execute(
-        """INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) 
+    for domain in model_responses["domains"]:
+        c.execute(
+            """INSERT OR IGNORE INTO domains (doi, domain) 
                  VALUES (?, ?)""",
-        (
-            article_info["doi"], 
-            "" if model_responses["chemistry"] is None else ", ".join(model_responses["chemistry"])
+            (
+                article_info["doi"], 
+                domain
+            )
         )
-    )
 
-    c.execute(
-        """INSERT OR IGNORE INTO biology_topics (doi, biology) 
+    for topic in model_responses["chemistry"]:
+        c.execute(
+            """INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) 
                  VALUES (?, ?)""",
-        (
-            article_info["doi"], 
-            "" if model_responses["biology"] is None else ", ".join(model_responses["biology"])
+            (
+                article_info["doi"], 
+                topic
+            )
         )
-    )
 
-    c.execute(
-        """INSERT OR IGNORE INTO computational_methods (doi, computational_method) 
+    for topic in model_responses["biology"]:
+        c.execute(
+            """INSERT OR IGNORE INTO biology_topics (doi, biology) 
                  VALUES (?, ?)""",
-        (
-            article_info["doi"], 
-            "" if model_responses["computational_methods"] is None else ", ".join(model_responses["computational_methods"])
+            (
+                article_info["doi"], 
+                topic
+            )
         )
-    )
+
+    for method in model_responses["computational_methods"]:
+        c.execute(
+            """INSERT OR IGNORE INTO computational_methods (doi, computational_method) 
+                 VALUES (?, ?)""",
+            (
+                article_info["doi"], 
+                method
+            )
+        )
 
     conn.commit()
     conn.close()
 
 
-def get_article(database, doi):
+def get_article(database, doi= None, pmc_id=None):
     """
     Get the article information and model responses for a given DOI.
 
@@ -223,69 +233,133 @@ def get_article(database, doi):
         The name of the database to retrieve the article from.
     doi : str
         The DOI of the article to retrieve.
+    pmc_id : str
+        The PMC ID of the article to retrieve.
 
     Returns
     -------
     dict
         A dictionary containing the article information and model responses.
     """
-    # check if the database exists
-    if not os.path.exists(database + ".db"):
-        raise FileNotFoundError(f"Database {database}.db does not exist.")
+    if doi is None and pmc_id is None:
+        raise ValueError("Either DOI or PMC ID must be provided.")
+    
+    if doi is not None and pmc_id is not None:
+        raise ValueError("Only one of DOI or PMC ID should be provided.")
+    
+    if doi is not None:
+        if not check_article_exists(database, doi, "doi"):
+            raise ValueError(f"Article with DOI {doi} does not exist in the database.")
+        
+    if pmc_id is not None:
+        if not check_article_exists(database, pmc_id, "pmc_id"):
+            raise ValueError(f"Article with PMC ID {pmc_id} does not exist in the database.")
     
     database = database + ".db"
     conn = sqlite3.connect(database)
     c = conn.cursor()
 
-    c.execute(
-        """SELECT * FROM article_info WHERE doi = ?""",
-        (doi,),
-    )
-    article_info = c.fetchone()
+    if doi is not None:
+        c.execute(
+            """SELECT * FROM article_info WHERE doi = ?""",
+            (doi,),
+        )
+        article_info = c.fetchone()
 
-    c.execute(
-        """SELECT * FROM model_responses WHERE doi = ?""",
-        (doi,),
-    )
-    model_responses = c.fetchone()
+        c.execute(
+            """SELECT * FROM model_responses WHERE doi = ?""",
+            (doi,),
+        )
+        model_responses = c.fetchone()
 
-    c.execute(
-        """SELECT peptide FROM peptides WHERE doi = ?""",
-        (doi,),
-    )
-    peptides = c.fetchall()
+        c.execute(
+            """SELECT peptide FROM peptides WHERE doi = ?""",
+            (doi,),
+        )
+        peptides = c.fetchall()
 
-    c.execute(
-        """SELECT protein FROM proteins WHERE doi = ?""",
-        (doi,),
-    )
-    proteins = c.fetchall()
+        c.execute(
+            """SELECT protein FROM proteins WHERE doi = ?""",
+            (doi,),
+        )
+        proteins = c.fetchall()
 
-    c.execute(
-        """SELECT domain FROM domains WHERE doi = ?""",
-        (doi,),
-    )
-    domains = c.fetchall()
+        c.execute(
+            """SELECT domain FROM domains WHERE doi = ?""",
+            (doi,),
+        )
+        domains = c.fetchall()
 
-    c.execute(
-        """SELECT chemistry FROM chemistry_topics WHERE doi = ?""",
-        (doi,),
-    )
-    chemistry_topics = c.fetchall()
+        c.execute(
+            """SELECT chemistry FROM chemistry_topics WHERE doi = ?""",
+            (doi,),
+        )
+        chemistry_topics = c.fetchall()
 
-    c.execute(
-        """SELECT biology FROM biology_topics WHERE doi = ?""",
-        (doi,),
-    )
-    biology_topics = c.fetchall()
+        c.execute(
+            """SELECT biology FROM biology_topics WHERE doi = ?""",
+            (doi,),
+        )
+        biology_topics = c.fetchall()
 
-    c.execute(
-        """SELECT computational_method FROM computational_methods WHERE doi = ?""",
-        (doi,),
-    )
-    computational_methods = c.fetchall()
+        c.execute(
+            """SELECT computational_method FROM computational_methods WHERE doi = ?""",
+            (doi,),
+        )
+        computational_methods = c.fetchall()
 
-    conn.close()
+        conn.close()
+    
+    elif pmc_id is not None:
+        c.execute(
+            """SELECT * FROM article_info WHERE pmc_id = ?""",
+            (pmc_id,),
+        )
+        article_info = c.fetchone()
+
+        c.execute(
+            """SELECT * FROM model_responses WHERE doi = ?""",
+            (pmc_id,),
+        )
+        model_responses = c.fetchone()
+
+        c.execute(
+            """SELECT peptide FROM peptides WHERE doi = ?""",
+            (pmc_id,),
+        )
+        peptides = c.fetchall()
+
+        c.execute(
+            """SELECT protein FROM proteins WHERE doi = ?""",
+            (pmc_id,),
+        )
+        proteins = c.fetchall()
+
+        c.execute(
+            """SELECT domain FROM domains WHERE doi = ?""",
+            (pmc_id,),
+        )
+        domains = c.fetchall()
+
+        c.execute(
+            """SELECT chemistry FROM chemistry_topics WHERE doi = ?""",
+            (pmc_id,),
+        )
+        chemistry_topics = c.fetchall()
+
+        c.execute(
+            """SELECT biology FROM biology_topics WHERE doi = ?""",
+            (pmc_id,),
+        )
+        biology_topics = c.fetchall()
+
+        c.execute(
+            """SELECT computational_method FROM computational_methods WHERE doi = ?""",
+            (pmc_id,),
+        )
+        computational_methods = c.fetchall()
+
+        conn.close()
 
     article = {
         "title": article_info[1],
@@ -297,6 +371,7 @@ def get_article(database, doi):
         "doi": article_info[7],
         "keywords": article_info[8],
         "scidir/pmc": article_info[9],  
+        "pmc_id": article_info[10],  
         "bullet_points": model_responses[2],
         "summary": model_responses[3],
         "metadata": model_responses[4],
@@ -395,6 +470,7 @@ def get_articles(database):
             "doi": article[7],
             "keywords": article[8],
             "scidir/pmc": article[9],
+            "pmc_id": article[10],
             "bullet_points": model_responses[2],
             "summary": model_responses[3],
             "metadata": model_responses[4],
@@ -460,8 +536,11 @@ def update_article(database, doi, model_responses):
     for peptide in model_responses["peptides"]:
         c.execute(
             """INSERT OR IGNORE INTO peptides (doi, peptide) 
-                     VALUES (?, ?)""",
-            (doi, peptide),
+                 VALUES (?, ?)""",
+            (
+                doi,
+                peptide
+            )
         )
 
     c.execute(
@@ -471,8 +550,11 @@ def update_article(database, doi, model_responses):
     for protein in model_responses["proteins"]:
         c.execute(
             """INSERT OR IGNORE INTO proteins (doi, protein) 
-                     VALUES (?, ?)""",
-            (doi, protein),
+                 VALUES (?, ?)""",
+            (
+                doi,
+                protein
+            )
         )
 
     c.execute(
@@ -482,30 +564,40 @@ def update_article(database, doi, model_responses):
     for domain in model_responses["domains"]:
         c.execute(
             """INSERT OR IGNORE INTO domains (doi, domain) 
-                     VALUES (?, ?)""",
-            (doi, domain),
+                 VALUES (?, ?)""",
+            (
+                doi,
+                domain
+            )
         )
+    
 
     c.execute(
         """DELETE FROM chemistry_topics WHERE doi = ?""",
         (doi,),
     )
-    for chemistry in model_responses["chemistry_topics"]:
+    for chemistry in model_responses["chemistry"]:
         c.execute(
             """INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) 
-                     VALUES (?, ?)""",
-            (doi, chemistry),
+                 VALUES (?, ?)""",
+            (
+                doi,
+                chemistry
+            )
         )
 
     c.execute(
         """DELETE FROM biology_topics WHERE doi = ?""",
         (doi,),
     )
-    for biology in model_responses["biology_topics"]:
+    for biology in model_responses["biology"]:
         c.execute(
             """INSERT OR IGNORE INTO biology_topics (doi, biology) 
-                     VALUES (?, ?)""",
-            (doi, biology),
+                 VALUES (?, ?)""",
+            (
+                doi,
+                biology
+            )
         )
 
     c.execute(
@@ -515,8 +607,151 @@ def update_article(database, doi, model_responses):
     for method in model_responses["computational_methods"]:
         c.execute(
             """INSERT OR IGNORE INTO computational_methods (doi, computational_method) 
-                     VALUES (?, ?)""",
-            (doi, method),
+                 VALUES (?, ?)""",
+            (
+                doi,
+                method
+            )
+        )
+
+    conn.commit()
+    conn.close()
+
+
+def check_article_exists(database, value, column):
+    """
+    Check if an article with the given value in the specified column exists in the database.
+
+    Parameters
+    ----------
+    database : str
+        The name of the database to check for the article.
+    value : str
+        The value to check for in the specified column.
+    column : str
+        The column to check for the value.
+
+    Returns
+    -------
+    bool
+        True if the article exists, False otherwise.
+    """
+    database = database + ".db"
+
+    # check if the database exists
+    if not os.path.exists(database):
+        raise FileNotFoundError(f"Database {database} does not exist.")
+    
+    conn = sqlite3.connect(database)
+    c = conn.cursor()
+
+    c.execute(
+        f"""SELECT * FROM article_info WHERE {column} = ?""",
+        (value,),
+    )
+    article = c.fetchone()
+
+    conn.close()
+
+    if article is not None:
+        return True
+    else:
+        return False
+    
+
+def delete_article(database, doi=None, pmc_id=None):
+    """
+    Delete an article and its model responses from the database.
+
+    Parameters
+    ----------
+    database : str
+        The name of the database to delete the article from.
+    doi : str
+        The DOI of the article to delete.
+    pmc_id : str
+        The PMC ID of the article to delete.
+
+    Returns
+    -------
+    None
+        The article and model responses are deleted from the database.
+    """
+    database = database + ".db"
+
+    # check if the database exists
+    if not os.path.exists(database):
+        raise FileNotFoundError(f"Database {database} does not exist.")
+    
+    conn = sqlite3.connect(database)
+    c = conn.cursor()
+
+    if doi is not None:
+        c.execute(
+            """DELETE FROM article_info WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM model_responses WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM peptides WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM proteins WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM domains WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM chemistry_topics WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM biology_topics WHERE doi = ?""",
+            (doi,),
+        )
+        c.execute(
+            """DELETE FROM computational_methods WHERE doi = ?""",
+            (doi,),
+        )
+
+    if pmc_id is not None:
+        c.execute(
+            """DELETE FROM article_info WHERE pmc_id = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM model_responses WHERE doi = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM peptides WHERE doi = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM proteins WHERE doi = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM domains WHERE doi = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM chemistry_topics WHERE doi = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM biology_topics WHERE doi = ?""",
+            (pmc_id,),
+        )
+        c.execute(
+            """DELETE FROM computational_methods WHERE doi = ?""",
+            (pmc_id,),
         )
 
     conn.commit()

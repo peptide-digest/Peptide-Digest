@@ -28,20 +28,30 @@ def split_into_chunks(text, chunk_size):
     return chunks
 
 
-def clean_summary(text):
+def clean_summary(summary_text):
     """
     Cleans a summary text by removing unwanted patterns and phrases.
 
     Parameters
     ----------
-    text : str
+    summary_text : str
         The summary text to clean.
 
     Returns
     -------
-    cleaned_text : str
+    cleaned_summary : str
         The cleaned summary text.
     """
+    # Split the summary text by newlines
+    summary_lines = summary_text.split('\n')
+
+    # Remove any lines that start with "##" or contain "Summary"
+    cleaned_lines = [line for line in summary_lines if not line.startswith('##') and 'Summary' not in line]
+    cleaned_lines = [line for line in cleaned_lines if 'Sure' not in line and 'Here' not in line]
+
+    # Join the cleaned lines back into a single string
+    cleaned_summary = '\n'.join(cleaned_lines)
+
     # Extended patterns and exact phrases to remove
     patterns = [
         r"Sure, here is a summary of the provided text in \d+ sentences:",
@@ -53,21 +63,21 @@ def clean_summary(text):
         r"Sure, here is a summary of the text in \d+ sentences",
         r"Here is a summary of the text in \d+ sentences:",
         r"Sure, here is a summary of the text you provided in a single paragraph:",
+        r"'Sure, here is a summary in bullet form of a scientific text",
+        r"Chunk \d+"
     ]
 
     # Remove patterns and exact phrases
     for pattern in patterns:
-        if "## Summary of the Scientific Article in 5 Sentences" in text:
-            text = text.replace(
+        if "## Summary of the Scientific Article in 5 Sentences" in cleaned_summary:
+            cleaned_summary = cleaned_summary.replace(
                 "## Summary of the Scientific Article in 5 Sentences", ""
             ).strip()
         else:
-            text = re.sub(pattern, "", text, flags=re.IGNORECASE).strip()
+            cleaned_summary = re.sub(pattern, "", cleaned_summary, flags=re.IGNORECASE).strip()
 
-    return text
+    return cleaned_summary
 
-
-import re
 
 def extract_metadata(metadata_text):
     """
