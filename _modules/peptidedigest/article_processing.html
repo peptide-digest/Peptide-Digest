@@ -547,20 +547,23 @@ document.write(`
 <span class="sd">        The processed articles information is stored in the database.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">doi</span> <span class="ow">in</span> <span class="n">dois</span><span class="p">:</span>
-        <span class="n">process_scidir_article</span><span class="p">(</span>
-            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
-        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">dois</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">doi</span> <span class="ow">in</span> <span class="n">dois</span><span class="p">:</span>
+            <span class="n">process_scidir_article</span><span class="p">(</span>
+                <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
+            <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">pii</span> <span class="ow">in</span> <span class="n">piis</span><span class="p">:</span>
-        <span class="n">process_scidir_article</span><span class="p">(</span>
-            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="n">pii</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
-        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">piis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">pii</span> <span class="ow">in</span> <span class="n">piis</span><span class="p">:</span>
+            <span class="n">process_scidir_article</span><span class="p">(</span>
+                <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">pii</span><span class="o">=</span><span class="n">pii</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
+            <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
-        <span class="n">process_scidir_article</span><span class="p">(</span>
-            <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
-        <span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">urls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
+            <span class="n">process_scidir_article</span><span class="p">(</span>
+                <span class="n">database</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="n">update</span>
+            <span class="p">)</span></div>
 
 
 
