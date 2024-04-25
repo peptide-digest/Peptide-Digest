@@ -157,8 +157,8 @@ def insert_article(database, article_info, model_responses=None):
         ),
     )
 
-    # test
-
+    if model_responses["peptides"] is None:
+        model_responses["peptides"] = []
     for peptide in model_responses["peptides"]:
         c.execute(
             """INSERT OR IGNORE INTO peptides (doi, peptide) 
@@ -169,6 +169,8 @@ def insert_article(database, article_info, model_responses=None):
             )
         )
 
+    if model_responses["proteins"] is None:
+        model_responses["proteins"] = []
     for protein in model_responses["proteins"]:
         c.execute(
             """INSERT OR IGNORE INTO proteins (doi, protein) 
@@ -179,6 +181,8 @@ def insert_article(database, article_info, model_responses=None):
             )
         )
 
+    if model_responses["domains"] is None:
+        model_responses["domains"] = []
     for domain in model_responses["domains"]:
         c.execute(
             """INSERT OR IGNORE INTO domains (doi, domain) 
@@ -189,6 +193,8 @@ def insert_article(database, article_info, model_responses=None):
             )
         )
 
+    if model_responses["chemistry"] is None:
+        model_responses["chemistry"] = []
     for topic in model_responses["chemistry"]:
         c.execute(
             """INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) 
@@ -199,6 +205,8 @@ def insert_article(database, article_info, model_responses=None):
             )
         )
 
+    if model_responses["biology"] is None:
+        model_responses["biology"] = []
     for topic in model_responses["biology"]:
         c.execute(
             """INSERT OR IGNORE INTO biology_topics (doi, biology) 
@@ -209,6 +217,8 @@ def insert_article(database, article_info, model_responses=None):
             )
         )
 
+    if model_responses["computational_methods"] is None:
+        model_responses["computational_methods"] = []
     for method in model_responses["computational_methods"]:
         c.execute(
             """INSERT OR IGNORE INTO computational_methods (doi, computational_method) 
@@ -533,6 +543,8 @@ def update_article(database, doi, model_responses):
         """DELETE FROM peptides WHERE doi = ?""",
         (doi,),
     )
+    if model_responses["peptides"] is None:
+        model_responses["peptides"] = []
     for peptide in model_responses["peptides"]:
         c.execute(
             """INSERT OR IGNORE INTO peptides (doi, peptide) 
@@ -547,6 +559,8 @@ def update_article(database, doi, model_responses):
         """DELETE FROM proteins WHERE doi = ?""",
         (doi,),
     )
+    if model_responses["proteins"] is None:
+        model_responses["proteins"] = []
     for protein in model_responses["proteins"]:
         c.execute(
             """INSERT OR IGNORE INTO proteins (doi, protein) 
@@ -561,6 +575,8 @@ def update_article(database, doi, model_responses):
         """DELETE FROM domains WHERE doi = ?""",
         (doi,),
     )
+    if model_responses["domains"] is None:
+        model_responses["domains"] = []
     for domain in model_responses["domains"]:
         c.execute(
             """INSERT OR IGNORE INTO domains (doi, domain) 
@@ -576,6 +592,8 @@ def update_article(database, doi, model_responses):
         """DELETE FROM chemistry_topics WHERE doi = ?""",
         (doi,),
     )
+    if model_responses["chemistry"] is None:
+        model_responses["chemistry"] = []
     for chemistry in model_responses["chemistry"]:
         c.execute(
             """INSERT OR IGNORE INTO chemistry_topics (doi, chemistry) 
@@ -590,6 +608,8 @@ def update_article(database, doi, model_responses):
         """DELETE FROM biology_topics WHERE doi = ?""",
         (doi,),
     )
+    if model_responses["biology"] is None:
+        model_responses["biology"] = []
     for biology in model_responses["biology"]:
         c.execute(
             """INSERT OR IGNORE INTO biology_topics (doi, biology) 
@@ -604,6 +624,8 @@ def update_article(database, doi, model_responses):
         """DELETE FROM computational_methods WHERE doi = ?""",
         (doi,),
     )
+    if model_responses["computational_methods"] is None:
+        model_responses["computational_methods"] = []
     for method in model_responses["computational_methods"]:
         c.execute(
             """INSERT OR IGNORE INTO computational_methods (doi, computational_method) 

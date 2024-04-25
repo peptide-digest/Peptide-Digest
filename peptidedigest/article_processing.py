@@ -156,20 +156,23 @@ def process_multiple_scidir_articles(
         The processed articles information is stored in the database.
 
     """
-    for doi in dois:
-        process_scidir_article(
-            database, tokenizer, model, api_key, doi=doi, chunk_size=chunk_size, update=update
-        )
+    if dois is not None:
+        for doi in dois:
+            process_scidir_article(
+                database, tokenizer, model, api_key, doi=doi, chunk_size=chunk_size, update=update
+            )
 
-    for pii in piis:
-        process_scidir_article(
-            database, tokenizer, model, api_key, pii=pii, chunk_size=chunk_size, update=update
-        )
+    if piis is not None:
+        for pii in piis:
+            process_scidir_article(
+                database, tokenizer, model, api_key, pii=pii, chunk_size=chunk_size, update=update
+            )
 
-    for url in urls:
-        process_scidir_article(
-            database, tokenizer, model, api_key, url=url, chunk_size=chunk_size, update=update
-        )
+    if urls is not None:
+        for url in urls:
+            process_scidir_article(
+                database, tokenizer, model, api_key, url=url, chunk_size=chunk_size, update=update
+            )
 
 
 def process_pmc_article(database, tokenizer, model, pmc_id, chunk_size=4200, update=False):
