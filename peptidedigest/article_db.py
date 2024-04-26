@@ -127,7 +127,7 @@ def insert_article(database, article_info, model_responses=None):
         (
             article_info["title"],
             ", ".join(article_info["authors"]),
-            ", ".join(article_info["keywords"]),
+            article_info["journal"],
             article_info["publisher"],
             article_info["date"],
             article_info["url"],
