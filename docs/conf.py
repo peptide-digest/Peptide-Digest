@@ -118,7 +118,7 @@ html_theme_options = {
     "logo": {
         "image_light": "pd-logo.png",
         "image_dark": "pd-logo.png",
-        "text": "ScienceScraper",
+        "text": "PeptideDigest",
     },
     "pygment_light_style": "default",
     "pygment_dark_style": "native",

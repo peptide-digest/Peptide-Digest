@@ -44,7 +44,7 @@ peptide research. This package provides the following functionalities:
         .. figure:: _static/user_guide.svg
             :width: 30%
 
-        Dive into the details of PeptideDigest with a tutorial.
+        Dive into the details of PeptideDigest and learn how to use the package.
 
         .. button-link:: ./user_guide/index.html
             :color: primary

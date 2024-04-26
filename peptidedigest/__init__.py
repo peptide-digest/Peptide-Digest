@@ -12,6 +12,8 @@ from .article_db import get_article
 from .article_db import get_articles
 from .article_db import check_article_exists
 from .article_db import delete_article
+from .article_db import insert_article
+from .article_db import update_article
 
 from .article_processing import process_scidir_article
 from .article_processing import process_multiple_scidir_articles

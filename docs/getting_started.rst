@@ -45,14 +45,16 @@ If the LLM is downloaded locally, you simply need the path to the model.
 
     .. code-block:: python
 
-        from transformers import AutoTokenizer, AutoModelForCausalLM
-        import torch 
+        from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+        import torch
 
-        tokenizer = AutoTokenizer.from_pretrained("../gemma-7b-it")
-        model = AutoModelForCausalLM.from_pretrained("../gemma-7b-it", torch_dtype=torch.bfloat16)
+        model_path = "path/to/model"
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = AutoModelForCausalLM.from_pretrained(model_path, config=BitsAndBytesConfig())
         model = model.to("cuda")
 
 .. note::
 
-    The Torch and Transformers libraries are required to use the LLM. These have been installed as dependencies of PeptideDigest, so you should not need to install them separately.
+    The Torch and Transformers libraries are required to use the LLM. Please make sure that your version of Torch is compabitle with CUDA. 
+    Take a look at the `Pytorch website <https://pytorch.org/get-started/locally/>`_ for more information on how to install Pytorch with CUDA support.
 
