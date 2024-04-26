@@ -35,6 +35,8 @@ Functions
    peptidedigest.get_articles
    peptidedigest.check_article_exists
    peptidedigest.delete_article
+   peptidedigest.insert_article
+   peptidedigest.update_article
    peptidedigest.process_scidir_article
    peptidedigest.process_multiple_scidir_articles
    peptidedigest.process_pmc_article
@@ -98,6 +100,30 @@ Functions
                 * **pmc_id** (*str*) -- The PMC ID of the article to delete.
 
    :returns: The article and model responses are deleted from the database.
+   :rtype: None
+
+
+.. py:function:: insert_article(database, article_info, model_responses=None)
+
+   Insert an article and its model responses into the database.
+
+   :Parameters: * **database** (*str*) -- The name of the database to insert the article into.
+                * **article_info** (*dict*) -- A dictionary containing the article information.
+                * **model_responses** (*dict*) -- A dictionary containing the model responses for the article.
+
+   :returns: The article and model responses are inserted into the database.
+   :rtype: None
+
+
+.. py:function:: update_article(database, doi, model_responses)
+
+   Update the model responses for an article in the database.
+
+   :Parameters: * **database** (*str*) -- The name of the database to update the article in.
+                * **doi** (*str*) -- The DOI of the article to update.
+                * **model_responses** (*dict*) -- A dictionary containing the updated model responses.
+
+   :returns: The model responses for the article are updated in the database.
    :rtype: None
 
 

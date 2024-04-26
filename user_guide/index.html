@@ -47,7 +47,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="How to Contribute" href="../contributing.html" />
+    <link rel="next" title="PeptideDigest Setup" href="setup.html" />
     <link rel="prev" title="Getting Started" href="../getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -129,7 +129,7 @@
     <script>document.write(`<img src="../_static/pd-logo.png" class="logo__image only-dark" alt=""/>`);</script>
   
   
-    <p class="title logo__title">ScienceScraper</p>
+    <p class="title logo__title">PeptideDigest</p>
   
 </a></div>
     
@@ -341,7 +341,12 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">PeptideDigest Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Generating Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">SQLite database</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -401,6 +406,27 @@ document.write(`
 <p>For a complete list of all the modules and functions in the package, please see the <a class="reference external" href="../autoapi/index.html">API Reference</a>.</p>
 <section id="guides">
 <h2>Guides<a class="headerlink" href="#guides" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">PeptideDigest Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#importing-the-necessary-packages">Importing the Necessary Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#initializing-the-model">Initializing the Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#create-the-database">Create the database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Generating Summaries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#sciencedirect">ScienceDirect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#pmc">PMC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">SQLite database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#creating-the-database">Creating the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#retrieving-an-article-from-the-database">Retrieving an article from the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#deleting-articles-from-the-database">Deleting articles from the database</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 </section>
 
@@ -424,11 +450,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../contributing.html"
+       href="setup.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">How to Contribute</p>
+        <p class="prev-next-title">PeptideDigest Setup</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API Reference &#8212; PeptideDigest  documentation</title>
+    <title>SQLite database &#8212; PeptideDigest  documentation</title>
   
   
   
@@ -44,11 +44,11 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/database';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="peptidedigest" href="peptidedigest/index.html" />
-    <link rel="prev" title="How to Contribute" href="../contributing.html" />
+    <link rel="next" title="How to Contribute" href="../contributing.html" />
+    <link rel="prev" title="Generating Summaries" href="model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -150,8 +150,8 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../user_guide/index.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
                         User Guide
                       </a>
                     </li>
@@ -164,8 +164,8 @@
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../autoapi/index.html">
                         API Reference
                       </a>
                     </li>
@@ -275,8 +275,8 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../user_guide/index.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
                         User Guide
                       </a>
                     </li>
@@ -289,8 +289,8 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../autoapi/index.html">
                         API Reference
                       </a>
                     </li>
@@ -341,14 +341,10 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="peptidedigest/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/article_db/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.article_db</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/article_processing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.article_processing</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/clean_text/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.clean_text</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/model_prompts/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.model_prompts</span></code></a></li>
-</ul>
-</li>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">PeptideDigest Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Generating Summaries</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SQLite database</a></li>
 </ul>
 </div>
 </nav></div>
@@ -386,7 +382,10 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">API Reference</li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">SQLite database</li>
   </ul>
 </nav>
 </div>
@@ -403,26 +402,67 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
-<p>This page contains auto-generated API reference documentation <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="peptidedigest/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/article_db/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.article_db</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/article_processing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.article_processing</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/clean_text/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.clean_text</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="peptidedigest/model_prompts/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest.model_prompts</span></code></a></li>
-</ul>
-</li>
-</ul>
+  <section id="sqlite-database">
+<h1>SQLite database<a class="headerlink" href="#sqlite-database" title="Link to this heading">#</a></h1>
+<p>The database is a SQLite database with the following schema:</p>
+<img alt="../_images/schema.png" class="align-center" src="../_images/schema.png" />
+<p>The database stores the article information, the model output, and has consists of tables pertaining to
+specific metadata. The DOI of an article is used to link the tables together, as the DOI is unique to each article.</p>
+<section id="creating-the-database">
+<h2>Creating the database<a class="headerlink" href="#creating-the-database" title="Link to this heading">#</a></h2>
+<p>The database is created using the <a class="reference internal" href="../autoapi/peptidedigest/index.html#peptidedigest.create_database" title="peptidedigest.create_database"><code class="xref py py-func docutils literal notranslate"><span class="pre">peptidedigest.create_database()</span></code></a> function.</p>
+<p>This function takes in the path to the database file and creates a new database at that location.
+It will not overwrite an existing database, so if you want to create a new database, you will need to use a new file path or name.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="sd-tab-item-0">
+PYTHON</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">db_path</span> <span class="o">=</span> <span class="s2">&quot;path/to/article_database.db&quot;</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="n">db_path</span><span class="p">)</span>
+</pre></div>
 </div>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="f1" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Created with <a class="reference external" href="https://github.com/readthedocs/sphinx-autoapi">sphinx-autoapi</a></p>
-</aside>
-</aside>
+</div>
+</div>
+<p>This will create a new database called <code class="docutils literal notranslate"><span class="pre">article_database.db</span></code> at the specified path.</p>
+</section>
+<section id="retrieving-an-article-from-the-database">
+<h2>Retrieving an article from the database<a class="headerlink" href="#retrieving-an-article-from-the-database" title="Link to this heading">#</a></h2>
+<p>To retrieve an article from the database, you can use the <a class="reference internal" href="../autoapi/peptidedigest/index.html#peptidedigest.get_article" title="peptidedigest.get_article"><code class="xref py py-func docutils literal notranslate"><span class="pre">peptidedigest.get_article()</span></code></a> function.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-1" name="sd-tab-set-1" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="sd-tab-item-1">
+PYTHON</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;10.1074/jbc.M117.805499&quot;</span>
+<span class="n">article</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">pmc_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And to retrieve all of them, you can use the <a class="reference internal" href="../autoapi/peptidedigest/index.html#peptidedigest.get_articles" title="peptidedigest.get_articles"><code class="xref py py-func docutils literal notranslate"><span class="pre">peptidedigest.get_articles()</span></code></a> function.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-2" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="sd-tab-item-2">
+PYTHON</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">articles</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_articles</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="deleting-articles-from-the-database">
+<h2>Deleting articles from the database<a class="headerlink" href="#deleting-articles-from-the-database" title="Link to this heading">#</a></h2>
+<p>To delete an article from the database, you can use the <a class="reference internal" href="../autoapi/peptidedigest/index.html#peptidedigest.delete_article" title="peptidedigest.delete_article"><code class="xref py py-func docutils literal notranslate"><span class="pre">peptidedigest.delete_article()</span></code></a> function.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="sd-tab-item-3">
+PYTHON</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;10.1074/jbc.M117.805499&quot;</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">delete_article</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="n">doi</span><span class="p">,</span> <span class="n">pmc_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
 
@@ -436,20 +476,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../contributing.html"
+       href="model.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">How to Contribute</p>
+        <p class="prev-next-title">Generating Summaries</p>
       </div>
     </a>
     <a class="right-next"
-       href="peptidedigest/index.html"
+       href="../contributing.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">peptidedigest</span></code></p>
+        <p class="prev-next-title">How to Contribute</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -464,9 +504,23 @@ document.write(`
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-database">Creating the database</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-an-article-from-the-database">Retrieving an article from the database</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deleting-articles-from-the-database">Deleting articles from the database</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/autoapi/index.rst.txt">
+    <a href="../_sources/user_guide/database.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

@@ -129,7 +129,7 @@
     <script>document.write(`<img src="_static/pd-logo.png" class="logo__image only-dark" alt=""/>`);</script>
   
   
-    <p class="title logo__title">ScienceScraper</p>
+    <p class="title logo__title">PeptideDigest</p>
   
 </a></div>
     
@@ -436,11 +436,12 @@ Installation is now complete!</p>
 <input checked="checked" id="sd-tab-item-2" name="sd-tab-set-2" type="radio">
 </input><label class="sd-tab-label" data-sync-id="tabcode-python" for="sd-tab-item-2">
 PYTHON</label><div class="sd-tab-content docutils">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForCausalLM</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">BitsAndBytesConfig</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 
-<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;../gemma-7b-it&quot;</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;../gemma-7b-it&quot;</span><span class="p">,</span> <span class="n">torch_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;path/to/model&quot;</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">BitsAndBytesConfig</span><span class="p">())</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -448,7 +449,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The Torch and Transformers libraries are required to use the LLM. These have been installed as dependencies of PeptideDigest, so you should not need to install them separately.</p>
+<p>The Torch and Transformers libraries are required to use the LLM. Please make sure that your version of Torch is compabitle with CUDA.
+Take a look at the <a class="reference external" href="https://pytorch.org/get-started/locally/">Pytorch website</a> for more information on how to install Pytorch with CUDA support.</p>
 </div>
 </section>
 </section>

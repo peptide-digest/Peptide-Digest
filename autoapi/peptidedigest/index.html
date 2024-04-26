@@ -129,7 +129,7 @@
     <script>document.write(`<img src="../../_static/pd-logo.png" class="logo__image only-dark" alt=""/>`);</script>
   
   
-    <p class="title logo__title">ScienceScraper</p>
+    <p class="title logo__title">PeptideDigest</p>
   
 </a></div>
     
@@ -441,6 +441,12 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.delete_article" title="peptidedigest.delete_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_article</span></code></a>(database[, doi, pmc_id])</p></td>
 <td><p>Delete an article and its model responses from the database.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.insert_article" title="peptidedigest.insert_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insert_article</span></code></a>(database, article_info[, model_responses])</p></td>
+<td><p>Insert an article and its model responses into the database.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#peptidedigest.update_article" title="peptidedigest.update_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_article</span></code></a>(database, doi, model_responses)</p></td>
+<td><p>Update the model responses for an article in the database.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#peptidedigest.process_scidir_article" title="peptidedigest.process_scidir_article"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_scidir_article</span></code></a>(database, tokenizer, model, api_key)</p></td>
 <td><p>Process a ScienceDirect article, summarize the article using the model, and store the information in the database.</p></td>
 </tr>
@@ -554,6 +560,48 @@ document.write(`
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The article and model responses are deleted from the database.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="peptidedigest.insert_article">
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">insert_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">article_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_responses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_db.html#insert_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.insert_article" title="Link to this definition">#</a></dt>
+<dd><p>Insert an article and its model responses into the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>str</em>) – The name of the database to insert the article into.</p></li>
+<li><p><strong>article_info</strong> (<em>dict</em>) – A dictionary containing the article information.</p></li>
+<li><p><strong>model_responses</strong> (<em>dict</em>) – A dictionary containing the model responses for the article.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The article and model responses are inserted into the database.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="peptidedigest.update_article">
+<span class="sig-prename descclassname"><span class="pre">peptidedigest.</span></span><span class="sig-name descname"><span class="pre">update_article</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_responses</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/peptidedigest/article_db.html#update_article"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peptidedigest.update_article" title="Link to this definition">#</a></dt>
+<dd><p>Update the model responses for an article in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<em>str</em>) – The name of the database to update the article in.</p></li>
+<li><p><strong>doi</strong> (<em>str</em>) – The DOI of the article to update.</p></li>
+<li><p><strong>model_responses</strong> (<em>dict</em>) – A dictionary containing the updated model responses.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The model responses for the article are updated in the database.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
@@ -749,6 +797,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.get_articles"><code class="docutils literal notranslate"><span class="pre">get_articles()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.check_article_exists"><code class="docutils literal notranslate"><span class="pre">check_article_exists()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.delete_article"><code class="docutils literal notranslate"><span class="pre">delete_article()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.insert_article"><code class="docutils literal notranslate"><span class="pre">insert_article()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.update_article"><code class="docutils literal notranslate"><span class="pre">update_article()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.process_scidir_article"><code class="docutils literal notranslate"><span class="pre">process_scidir_article()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.process_multiple_scidir_articles"><code class="docutils literal notranslate"><span class="pre">process_multiple_scidir_articles()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peptidedigest.process_pmc_article"><code class="docutils literal notranslate"><span class="pre">process_pmc_article()</span></code></a></li>

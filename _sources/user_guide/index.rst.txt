@@ -11,3 +11,9 @@ For a complete list of all the modules and functions in the package, please see 
 Guides 
 ------
 
+.. toctree::
+    :maxdepth: 2
+
+    setup
+    model 
+    database
